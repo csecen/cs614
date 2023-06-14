@@ -90,7 +90,10 @@ class State:
         self.isEnd = False
         self.playerSymbol = 1
 
-    def play(self, rounds=100):
+    def play(self, rounds=100, run_eval=False):
+        if run_eval:
+            win_count = [0,0]
+
         for i in range(rounds):
             if i % 1000 == 0:
                 print("Rounds {}".format(i))
@@ -112,6 +115,8 @@ class State:
                     self.p1.reset()
                     self.p2.reset()
                     self.reset()
+                    if run_eval:
+                        win_count[0] = win_count[0]+1
                     break
 
                 else:
@@ -130,7 +135,11 @@ class State:
                         self.p1.reset()
                         self.p2.reset()
                         self.reset()
+                        if run_eval:
+                            win_count[1] = win_count[1] + 1
                         break
+        if run_eval:
+            return win_count
 
     # play with human
     def play2(self):
